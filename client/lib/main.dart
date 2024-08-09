@@ -6,9 +6,10 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'app.dart';
 
 void main() async {
-  init();
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  await init();
 
   await EasyLocalization.ensureInitialized();
 

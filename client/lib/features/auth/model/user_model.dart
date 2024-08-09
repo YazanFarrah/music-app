@@ -7,6 +7,7 @@ class UserModel {
   final String password;
   final String birthday;
   final Gender gender;
+  final String? token;
 
   UserModel({
     required this.name,
@@ -14,6 +15,7 @@ class UserModel {
     required this.password,
     required this.birthday,
     required this.gender,
+    this.token,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class UserModel {
         (e) => e.toString().split('.').last == json[UserModelConstants.gender],
         orElse: () => Gender.male,
       ),
+      token: json[UserModelConstants.token],
     );
   }
 
@@ -45,6 +48,7 @@ class UserModel {
     String? password,
     String? birthday,
     Gender? gender,
+    String? token,
   }) {
     return UserModel(
       name: name ?? this.name,
@@ -52,6 +56,7 @@ class UserModel {
       password: password ?? this.password,
       birthday: birthday ?? this.birthday,
       gender: gender ?? this.gender,
+      token: token ?? this.token,
     );
   }
 

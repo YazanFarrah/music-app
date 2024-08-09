@@ -1,10 +1,13 @@
 import 'dart:developer';
+import 'package:client/core/providers/bottom_nav_bar_provider.dart';
+import 'package:client/core/providers/current_user_provider.dart';
 import 'package:client/core/router/router.dart';
 import 'package:client/core/theme/app_themes.dart';
 import 'package:client/features/auth/viewmodel/auth_viewmodel.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatefulWidget {
@@ -63,9 +66,11 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => AuthViewModel(),
-        )
+        ChangeNotifierProvider(create: (context) => AuthViewModel()),
+        ChangeNotifierProvider(create: (context) => BottomNavProvider()),
+        ChangeNotifierProvider<CurrentUserProvider>(
+          create: (_) => GetIt.I<CurrentUserProvider>(),
+        ),
       ],
       child: ScreenUtilInit(
         designSize: const Size(384.0, 808.17),

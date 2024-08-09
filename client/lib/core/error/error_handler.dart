@@ -3,12 +3,15 @@ import 'package:client/core/error/failure.dart';
 import 'package:fpdart/fpdart.dart';
 
 class ApiResponseHandler {
-  static Either<AppFailure, T> handleResponse<T>(
-      int statusCode, String responseBody, T Function(Map<String, dynamic>) fromJson) {
-    final Map<String, dynamic> resBodyMap = jsonDecode(responseBody) as Map<String, dynamic>;
+  static Either<AppFailure, T> handleResponse<T>(int statusCode,
+      String responseBody, T Function(Map<String, dynamic>) fromJson,
+      {String? jsonPath}) {
+    final Map<String, dynamic> resBodyMap =
+        jsonDecode(responseBody) as Map<String, dynamic>;
 
     if (statusCode >= 200 && statusCode < 300) {
-      return Right(fromJson(resBodyMap));
+      final data = jsonPath != null ? resBodyMap[jsonPath] : resBodyMap;
+      return Right(fromJson(data));
     } else if (statusCode >= 400 && statusCode < 500) {
       final errorMessage = resBodyMap['detail'] ?? 'Validation error occurred';
       return Left(ValidationFailure(errorMessage));

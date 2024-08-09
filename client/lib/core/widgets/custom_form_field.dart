@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomFormField extends StatelessWidget {
   final String? hintText;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final bool? isPass;
   final TextInputType? keyType;
   final int? maxLength;
@@ -23,11 +23,13 @@ class CustomFormField extends StatelessWidget {
   final Widget? suffix;
   final bool? numbersOnly;
   final TextInputAction? textInputAction;
+  final bool? readOnly;
+  final VoidCallback? onTap;
 
   const CustomFormField({
     super.key,
     this.hintText,
-    required this.controller,
+    this.controller,
     this.isPass,
     this.keyType,
     this.maxLength,
@@ -45,6 +47,8 @@ class CustomFormField extends StatelessWidget {
     this.suffix,
     this.numbersOnly,
     this.textInputAction,
+    this.readOnly = false,
+    this.onTap,
   });
 
   _border(Color color) => OutlineInputBorder(
@@ -58,6 +62,8 @@ class CustomFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: onTap,
+      readOnly: readOnly!,
       style: const TextStyle(color: Colors.white), // Change text color here
 
       onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
@@ -68,11 +74,12 @@ class CustomFormField extends StatelessWidget {
 
       decoration: InputDecoration(
         border: InputBorder.none, // Removes the underline
-        contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 20.w),
+        contentPadding: EdgeInsets.symmetric(vertical: verticalPadding?? 14.h, horizontal: 20.w),
         enabledBorder: _border(AppDarkColors.borderColor),
         focusedBorder: _border(
           AppDarkColors.primaryColor,
         ),
+        
         suffixIcon: suffix,
         filled: filled ?? false,
 

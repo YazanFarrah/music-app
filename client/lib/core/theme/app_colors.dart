@@ -27,10 +27,10 @@ class AppLightColors {
 class AppDarkColors {
   static const Color primaryColor = Color.fromARGB(255, 21, 63, 69);
   static const Color secondaryColor = Color(0xFF03D7DD);
-  static const Color cardHeaderColor = Color(0xFFB8B9FE);
+  static const Color cardHeaderColor = Color.fromARGB(255, 239, 239, 240);
   static const Color cardBackgroundColor = Color(0xFF181818);
   static const Color cardWhiteColor = Color(0xFF000000);
-  static const Color textColor = Color(0xFFB8B9FE);
+  static const Color textColor = Color.fromARGB(255, 239, 239, 240);
   static const Color scaffoldBackground = Color(0xFF181818);
   static const Color settingCardBackground = Color(0xff171717);
   static const Color textLightColor = Color(0x99ffffff);
@@ -38,7 +38,7 @@ class AppDarkColors {
   static const Color darkGrayColor = Color(0xFF4F4F4F);
   static const Color lightGrayColor = Color.fromARGB(255, 191, 191, 191);
   static const Color whiteColor = Color.fromARGB(255, 255, 255, 255);
-  static const Color onBackgroundColor = Color.fromARGB(255, 24, 24, 32);
+  static const Color onBackgroundColor = Color.fromARGB(134, 194, 194, 202);
   static const Color backgroundColor = Color.fromARGB(255, 15, 15, 23);
   static const Color greenColor = Color.fromARGB(255, 26, 175, 26);
   static const Color redColor = Color.fromARGB(255, 255, 0, 0);

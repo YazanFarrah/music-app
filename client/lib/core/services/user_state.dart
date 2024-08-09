@@ -1,10 +1,15 @@
 import 'package:client/config/asset_paths.dart';
 import 'package:client/core/router/route_paths.dart';
+import 'package:client/features/auth/repositories/auth_local_repository.dart';
+import 'package:client/features/auth/viewmodel/auth_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
+import '../../di.dart';
 
 class UserState extends StatefulWidget {
   const UserState({super.key});
@@ -14,6 +19,8 @@ class UserState extends StatefulWidget {
 }
 
 class _UserStateState extends State<UserState> {
+  final locator = getIt<AuthLocalRepository>();
+
   @override
   void initState() {
     checkUserState();
@@ -21,9 +28,14 @@ class _UserStateState extends State<UserState> {
   }
 
   void checkUserState() async {
-    Future.delayed(Duration.zero, () {
-      context.pushNamed(RoutePaths.auth);
-    });
+    if (locator.getToken == null) {
+      Future.delayed(Duration.zero, () {
+        context.pushNamed(RoutePaths.auth);
+      });
+    } else {
+      await context.read<AuthViewModel>().getCurrentUserData(context: context);
+      return;
+    }
   }
 
   // Future<UserModel?> _getUser() async {

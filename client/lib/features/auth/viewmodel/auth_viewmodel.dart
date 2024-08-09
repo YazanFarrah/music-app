@@ -1,7 +1,11 @@
+import 'dart:developer';
+
+import 'package:client/core/providers/current_user_provider.dart';
 import 'package:client/core/router/route_paths.dart';
 import 'package:client/core/utils/toast_utils.dart';
 import 'package:client/di.dart';
 import 'package:client/features/auth/model/user_model.dart';
+import 'package:client/features/auth/repositories/auth_local_repository.dart';
 import 'package:client/features/auth/repositories/auth_remote_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:client/core/enums/gender.dart';
@@ -9,6 +13,9 @@ import 'package:go_router/go_router.dart';
 
 class AuthViewModel extends ChangeNotifier {
   final authRemoteRepository = getIt<AuthRemoteRepository>();
+  final authLocalRepository = getIt<AuthLocalRepository>();
+  final _currentUserProvier = getIt<CurrentUserProvider>();
+
   UserModel _userModel = UserModel(
     name: "",
     email: "",
@@ -68,14 +75,13 @@ class AuthViewModel extends ChangeNotifier {
       ),
     );
     res.fold((l) {
-      updateLoading(true);
-      ToastUtils.showError(context, l.message);
-    }, (r) {
       updateLoading(false);
+      ToastUtils.showError(context, l.message);
+    }, (user) {
+      updateLoading(false);
+      _currentUserProvier.addUser(user);
       context.pushNamed(RoutePaths.navScreen);
-      return null;
     });
-    updateLoading(false);
   }
 
   Future<void> login({
@@ -89,14 +95,33 @@ class AuthViewModel extends ChangeNotifier {
       email: email,
     );
     res.fold((l) {
-      updateLoading(true);
+      updateLoading(false);
       ToastUtils.showError(context, l.message);
-    }, (r) {
+    }, (user) {
+      authLocalRepository.setToken(user.token);
+      _currentUserProvier.addUser(user);
       updateLoading(false);
       context.pushNamed(RoutePaths.navScreen);
-      return null;
     });
-    updateLoading(false);
+  }
+
+  Future<void> getCurrentUserData({
+    required BuildContext context,
+  }) async {
+    updateLoading(true);
+    if (authLocalRepository.getToken == null) {
+      return;
+    }
+    final res = await authRemoteRepository.getUserData();
+    res.fold((l) {
+      log('error: ${l.message}');
+      updateLoading(false);
+      context.pushNamed(RoutePaths.auth);
+    }, (user) {
+      _currentUserProvier.addUser(user);
+      updateLoading(false);
+      context.pushNamed(RoutePaths.navScreen);
+    });
   }
 
   void clear() {

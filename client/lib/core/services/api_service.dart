@@ -4,14 +4,18 @@ import 'dart:io';
 
 import 'package:client/config/api_paths.dart';
 import 'package:client/core/utils/prints_utils.dart';
+import 'package:client/di.dart';
+import 'package:client/features/auth/repositories/auth_local_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:retry/retry.dart';
 
 class RestApiService {
   static Future<Map<String, String>> getHeaders() async {
+    final token = getIt<AuthLocalRepository>().getToken;
     return {
       'Content-type': 'application/json',
       'Accept': 'application/json',
+      'x-auth-token': token ?? "",
     };
   }
 
@@ -21,9 +25,6 @@ class RestApiService {
     final url = Uri.parse('${ApiPaths.baseUrl}$path')
         .replace(queryParameters: queryParams);
     final headers = await getHeaders();
-
-    printWarning("full url: $url");
-    printError(headers);
 
     return retry(
       () => http.get(url, headers: headers).timeout(const Duration(seconds: 4)),

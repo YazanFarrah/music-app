@@ -137,6 +137,42 @@ class AppThemes {
     bottomSheetTheme: const BottomSheetThemeData(
       backgroundColor: AppDarkColors.backgroundColor,
     ),
+    primaryTextTheme: TextTheme(),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: AppDarkColors.backgroundColor,
+      selectedItemColor: AppDarkColors.primaryColor,
+      unselectedItemColor: AppDarkColors.textLightColor,
+      selectedIconTheme: const IconThemeData(
+        color: AppDarkColors.secondaryColor,
+      ),
+      unselectedIconTheme: const IconThemeData(
+        color: AppDarkColors.lightGrayColor,
+      ),
+      showUnselectedLabels: true,
+      showSelectedLabels: true,
+      selectedLabelStyle: TextStyle(
+        fontFamily: "Almarai",
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w700,
+        color: AppDarkColors.secondaryColor,
+        height: 0.0,
+      ),
+      unselectedLabelStyle: TextStyle(
+        fontFamily: "Almarai",
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w700,
+        color: AppDarkColors.grayColor,
+        height: 0.0,
+      ),
+      elevation: 8.0,
+      type: BottomNavigationBarType.fixed,
+    ),
+    iconTheme: const IconThemeData(color: AppDarkColors.grayColor),
+    iconButtonTheme: IconButtonThemeData(
+      style: ButtonStyle(
+        iconColor: MaterialStateProperty.all(AppDarkColors.grayColor),
+      ),
+    ),
     shadowColor: AppDarkColors.grayColor,
     textTheme: TextTheme(
       displaySmall: TextStyle(

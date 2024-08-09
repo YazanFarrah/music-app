@@ -1,6 +1,6 @@
 import 'package:client/core/router/route_paths.dart';
 import 'package:client/core/services/user_state.dart';
-import 'package:client/core/widgets/nav_bar.dart';
+import 'package:client/core/widgets/bottom_nav_bar.dart';
 import 'package:client/features/auth/view/pages/auth_page.dart';
 import 'package:client/features/auth/view/pages/login_page.dart';
 import 'package:client/features/auth/view/pages/signup_page.dart';
@@ -51,7 +51,7 @@ class AppRouter {
         name: RoutePaths.navScreen,
         pageBuilder: (context, state) {
           return const MaterialPage(
-            child: NavBar(),
+            child: BottomNavBar(),
           );
         },
       ),
