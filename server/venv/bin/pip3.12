@@ -1,4 +1,4 @@
-#!/Users/macbook/development/projects/personal/musicapp/server/venv/bin/python3.12
+#!/Users/macbook/development/projects/personal/musicapp/server/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
