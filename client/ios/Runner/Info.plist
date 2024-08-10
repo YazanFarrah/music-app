@@ -49,5 +49,7 @@
 	<string>Allow so you can upload songs to our platform!</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow so you can upload great profile picture or songs thumbnails!</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>So we can show songs waves when you publish them!</string>
 </dict>
 </plist>

@@ -3,12 +3,12 @@ import 'package:client/config/style_constants.dart';
 import 'package:client/core/theme/app_colors.dart';
 import 'package:client/core/widgets/custom_app_bar.dart';
 import 'package:client/core/widgets/custom_form_field.dart';
+import 'package:client/features/home/view/widgets/audio_wave.dart';
 import 'package:client/features/home/viewmodel/upload_song_provider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +41,9 @@ class _UploadSongScreenState extends State<UploadSongScreen> {
         leading: const SizedBox.shrink(),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              uploadSongProvider.uploadSong();
+            },
             icon: const Icon(Icons.check),
           )
         ],
@@ -96,14 +98,19 @@ class _UploadSongScreenState extends State<UploadSongScreen> {
               }),
             ),
             SizedBox(height: 40.h),
-            CustomFormField(
-              readOnly: true,
-              onTap: () {
-                uploadSongProvider.selectAudio();
-              },
-              hintText: "pickSong".tr(),
-              verticalPadding: 25.h,
-            ),
+            Consumer<UploadSongProvider>(
+                builder: (context, uploadSongProvider, child) {
+              return uploadSongProvider.audio != null
+                  ? AudioWave(path: uploadSongProvider.audio!.path)
+                  : CustomFormField(
+                      readOnly: true,
+                      onTap: () {
+                        uploadSongProvider.selectAudio();
+                      },
+                      hintText: "pickSong".tr(),
+                      verticalPadding: 25.h,
+                    );
+            }),
             SizedBox(height: 20.h),
             CustomFormField(
               hintText: "songName".tr(),

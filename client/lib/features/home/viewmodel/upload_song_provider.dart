@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:client/core/utils/picker_utils.dart';
+import 'package:client/features/home/repositories/home_repository.dart';
 import 'package:flutter/material.dart';
 
 class UploadSongProvider extends ChangeNotifier {
@@ -47,5 +48,12 @@ class UploadSongProvider extends ChangeNotifier {
       _artistName = name;
       notifyListeners();
     });
+  }
+
+  void uploadSong() async {
+    final res = await HomeRepository().uploadSong(
+      _audio!.path,
+      _image!.path,
+    );
   }
 }
