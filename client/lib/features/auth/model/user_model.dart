@@ -2,6 +2,7 @@ import 'package:client/config/json_constants.dart';
 import 'package:client/core/enums/gender.dart';
 
 class UserModel {
+  final String? id;
   final String name;
   final String email;
   final String password;
@@ -10,6 +11,7 @@ class UserModel {
   final String? token;
 
   UserModel({
+    this.id,
     required this.name,
     required this.email,
     required this.password,
@@ -20,6 +22,7 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
+      id: json[UserModelConstants.id],
       name: json[UserModelConstants.name] ?? "",
       email: json[UserModelConstants.email] ?? "",
       password: json[UserModelConstants.password] ?? "",

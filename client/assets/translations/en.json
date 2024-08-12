@@ -16,5 +16,9 @@
   "signup": "Sign Up",
   "createAccount": "Create Account",
   "email": "Email",
-  "password": "Password"
+  "password": "Password",
+  "songName": "Song Name",
+  "pickFile": "Pick File",
+  "artist": "Artist",
+  "chooseThumbnail": "Choose Thumbnail"
 }

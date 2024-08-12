@@ -89,6 +89,7 @@ class CustomFormField extends StatelessWidget {
             Radius.circular(radius ?? 10),
           ),
         ),
+        errorStyle: const TextStyle(height: 0),
 
         focusedErrorBorder: _border(
           AppDarkColors.redColor,

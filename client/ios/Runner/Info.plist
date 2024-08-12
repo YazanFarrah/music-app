@@ -51,5 +51,10 @@
 	<string>Allow so you can upload great profile picture or songs thumbnails!</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>So we can show songs waves when you publish them!</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+    	<key>NSAllowsArbitraryLoads</key>
+    	<true/>
+	</dict>
 </dict>
 </plist>

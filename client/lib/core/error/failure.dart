@@ -2,7 +2,6 @@ class AppFailure {
   final String message;
 
   AppFailure([this.message = "Sorry, an unexpected error occurred!"]);
-  
 
   @override
   String toString() => 'AppFailure(message: $message)';
@@ -18,6 +17,10 @@ class ServerFailure extends AppFailure {
 
 class ValidationFailure extends AppFailure {
   ValidationFailure([super.message = "Validation error occurred!"]);
+}
+
+class ParsingFailure extends AppFailure {
+  ParsingFailure([super.message = "Parsing error"]);
 }
 
 class UnknownFailure extends AppFailure {

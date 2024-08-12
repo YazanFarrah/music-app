@@ -10,4 +10,14 @@ class ToastUtils {
       ),
     );
   }
+
+  static void showSuccess(BuildContext context, String error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(error),
+        backgroundColor: Colors.green.withOpacity(0.8),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
 }

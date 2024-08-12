@@ -6,6 +6,7 @@ import 'package:client/config/json_constants.dart';
 import 'package:client/core/error/error_handler.dart';
 import 'package:client/core/error/failure.dart';
 import 'package:client/core/services/api_service.dart';
+import 'package:client/core/utils/prints_utils.dart';
 import 'package:client/features/auth/model/user_model.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -15,9 +16,8 @@ class AuthRemoteRepository {
   }) async {
     try {
       final res = await RestApiService.post(ApiPaths.signup, user.toJson());
-      return ApiResponseHandler.handleResponse(
-        res.statusCode,
-        res.body,
+      return ApiResponseHandler.handleSingleResponse<UserModel>(
+        res,
         (json) => UserModel.fromJson(json),
       );
     } catch (e) {
@@ -37,9 +37,8 @@ class AuthRemoteRepository {
           UserModelConstants.password: password,
         },
       );
-      return ApiResponseHandler.handleResponse(
-        res.statusCode,
-        res.body,
+      return ApiResponseHandler.handleSingleResponse<UserModel>(
+        res,
         (json) => UserModel.fromJson(json).copyWith(
           token: jsonDecode(res.body)['token'],
         ),
@@ -55,9 +54,9 @@ class AuthRemoteRepository {
       final res = await RestApiService.get(
         ApiPaths.getUserData,
       );
-      return ApiResponseHandler.handleResponse(
-        res.statusCode,
-        res.body,
+      printError(res.body);
+      return ApiResponseHandler.handleSingleResponse<UserModel>(
+        res,
         (json) => UserModel.fromJson(json),
       );
     } catch (e) {

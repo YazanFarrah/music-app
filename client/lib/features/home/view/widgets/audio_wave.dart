@@ -55,11 +55,10 @@ class _AudioWaveState extends State<AudioWave> {
         ),
         Expanded(
           child: AudioFileWaveforms(
-            playerWaveStyle:  PlayerWaveStyle(
+            playerWaveStyle: PlayerWaveStyle(
               liveWaveColor: Theme.of(context).primaryColor,
               spacing: 7,
               seekLineThickness: 1,
-              
             ),
             size: const Size(double.infinity, 100),
             playerController: _playerController,

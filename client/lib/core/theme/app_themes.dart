@@ -137,10 +137,9 @@ class AppThemes {
     bottomSheetTheme: const BottomSheetThemeData(
       backgroundColor: AppDarkColors.backgroundColor,
     ),
-    primaryTextTheme: TextTheme(),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: AppDarkColors.backgroundColor,
-      selectedItemColor: AppDarkColors.primaryColor,
+      selectedItemColor: Colors.white,
       unselectedItemColor: AppDarkColors.textLightColor,
       selectedIconTheme: const IconThemeData(
         color: AppDarkColors.secondaryColor,
@@ -154,7 +153,7 @@ class AppThemes {
         fontFamily: "Almarai",
         fontSize: 14.sp,
         fontWeight: FontWeight.w700,
-        color: AppDarkColors.secondaryColor,
+        color: Colors.white,
         height: 0.0,
       ),
       unselectedLabelStyle: TextStyle(
@@ -179,7 +178,7 @@ class AppThemes {
         fontFamily: "Almarai",
         fontSize: 14.sp,
         fontWeight: FontWeight.w600,
-        color: AppDarkColors.darkGrayColor,
+        color: AppDarkColors.grayColor.withOpacity(0.65),
         height: 0.0,
       ),
       displayMedium: TextStyle(

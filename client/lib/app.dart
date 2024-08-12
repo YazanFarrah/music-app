@@ -1,9 +1,11 @@
 import 'dart:developer';
 import 'package:client/core/providers/bottom_nav_bar_provider.dart';
+import 'package:client/core/providers/current_song_provider.dart';
 import 'package:client/core/providers/current_user_provider.dart';
 import 'package:client/core/router/router.dart';
 import 'package:client/core/theme/app_themes.dart';
 import 'package:client/features/auth/viewmodel/auth_viewmodel.dart';
+import 'package:client/features/home/viewmodel/home_view_model.dart';
 import 'package:client/features/home/viewmodel/upload_song_provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +74,9 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         ChangeNotifierProvider<CurrentUserProvider>(
           create: (_) => GetIt.I<CurrentUserProvider>(),
         ),
-        ChangeNotifierProvider(create: (context) => UploadSongProvider()),
+        ChangeNotifierProvider(create: (context) => UploadSongViewModel()),
+        ChangeNotifierProvider(create: (context) => HomeViewModel()),
+        ChangeNotifierProvider(create: (context) => CurrentSongProvider()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(384.0, 808.17),
