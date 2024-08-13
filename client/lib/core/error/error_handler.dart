@@ -61,6 +61,9 @@ class ApiResponseHandler {
       final data = jsonPath != null && resBody is Map<String, dynamic>
           ? resBody[jsonPath]
           : resBody;
+      if (data[jsonPath] is bool) {
+        return Right(data[jsonPath]);
+      }
 
       if (data is Map<String, dynamic>) {
         final item = fromJson(data);

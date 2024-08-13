@@ -114,7 +114,7 @@ class _UploadSongScreenState extends State<UploadSongPage> {
                                       ),
                                       SizedBox(height: 15.h),
                                       Text(
-                                        "chooseThubmnail".tr(),
+                                        "chooseThumbnail".tr(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .displayMedium,
@@ -169,7 +169,8 @@ class _UploadSongScreenState extends State<UploadSongPage> {
                       pickersEnabled: const {
                         ColorPickerType.wheel: true,
                       },
-                    )
+                    ),
+                    SizedBox(height: 70.h),
                   ],
                 ),
               ),

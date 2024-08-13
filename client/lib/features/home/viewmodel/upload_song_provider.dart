@@ -7,7 +7,7 @@ import 'package:client/core/utils/picker_utils.dart';
 import 'package:client/core/utils/prints_utils.dart';
 import 'package:client/core/utils/toast_utils.dart';
 import 'package:client/di.dart';
-import 'package:client/features/home/repositories/home_repository.dart';
+import 'package:client/features/home/repositories/home_remote_repository.dart';
 import 'package:flutter/material.dart';
 
 class UploadSongViewModel extends ChangeNotifier {

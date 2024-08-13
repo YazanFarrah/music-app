@@ -43,4 +43,27 @@ class SongModel {
   String toString() {
     return 'SongModel(id: $id, songName: $songName, artistName: $artistName, thumbnailUrl: $thumbnailUrl, songUrl: $songUrl, hexCode: $hexCode)';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is SongModel &&
+        other.id == id &&
+        other.songName == songName &&
+        other.artistName == artistName &&
+        other.thumbnailUrl == thumbnailUrl &&
+        other.songUrl == songUrl &&
+        other.hexCode == hexCode;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        songName.hashCode ^
+        artistName.hashCode ^
+        thumbnailUrl.hashCode ^
+        songUrl.hashCode ^
+        hexCode.hashCode;
+  }
 }

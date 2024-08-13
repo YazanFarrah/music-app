@@ -1,5 +1,6 @@
 import 'package:client/config/json_constants.dart';
 import 'package:client/core/enums/gender.dart';
+import 'package:client/core/models/fav_song_model.dart';
 
 class UserModel {
   final String? id;
@@ -9,6 +10,7 @@ class UserModel {
   final String birthday;
   final Gender gender;
   final String? token;
+  final List<FavSongModel>? favSongs;
 
   UserModel({
     this.id,
@@ -18,6 +20,7 @@ class UserModel {
     required this.birthday,
     required this.gender,
     this.token,
+    this.favSongs,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -32,6 +35,11 @@ class UserModel {
         orElse: () => Gender.male,
       ),
       token: json[UserModelConstants.token],
+      favSongs: List<FavSongModel>.from(
+        (json[UserModelConstants.favSongs] ?? []).map(
+          (song) => FavSongModel.fromJson(song as Map<String, dynamic>),
+        ),
+      ),
     );
   }
 
@@ -42,6 +50,8 @@ class UserModel {
       UserModelConstants.password: password,
       UserModelConstants.birthday: birthday,
       UserModelConstants.gender: gender.toString().split('.').last,
+      UserModelConstants.favSongs:
+          favSongs?.map((song) => song.toJson()).toList()
     };
   }
 
@@ -52,6 +62,7 @@ class UserModel {
     String? birthday,
     Gender? gender,
     String? token,
+    List<FavSongModel>? favSongs,
   }) {
     return UserModel(
       name: name ?? this.name,
@@ -60,12 +71,13 @@ class UserModel {
       birthday: birthday ?? this.birthday,
       gender: gender ?? this.gender,
       token: token ?? this.token,
+      favSongs: favSongs ?? this.favSongs,
     );
   }
 
   @override
   String toString() {
-    return 'UserModel{name: $name, email: $email, password: $password, birthday: $birthday, gender: $gender}';
+    return 'UserModel{name: $name, email: $email, password: $password, birthday: $birthday, gender: $gender, favSongs: $favSongs}';
   }
 
   @override
@@ -76,7 +88,8 @@ class UserModel {
         other.email == email &&
         other.password == password &&
         other.birthday == birthday &&
-        other.gender == gender;
+        other.gender == gender &&
+        other.favSongs == favSongs;
   }
 
   @override
@@ -85,6 +98,7 @@ class UserModel {
         email.hashCode ^
         password.hashCode ^
         birthday.hashCode ^
-        gender.hashCode;
+        gender.hashCode ^
+        favSongs.hashCode;
   }
 }

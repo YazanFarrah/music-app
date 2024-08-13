@@ -4,7 +4,7 @@ import 'package:client/core/providers/current_user_provider.dart';
 import 'package:client/core/router/route_paths.dart';
 import 'package:client/core/utils/toast_utils.dart';
 import 'package:client/di.dart';
-import 'package:client/features/auth/model/user_model.dart';
+import 'package:client/core/models/user_model.dart';
 import 'package:client/features/auth/repositories/auth_local_repository.dart';
 import 'package:client/features/auth/repositories/auth_remote_repository.dart';
 import 'package:flutter/material.dart';
@@ -116,11 +116,12 @@ class AuthViewModel extends ChangeNotifier {
     res.fold((l) {
       log('error: ${l.message}');
       updateLoading(false);
-      context.pushNamed(RoutePaths.auth);
+      // TODO: Check if there's internet connection, if there's then nav to auth otherwise to navscreen
+      context.pushReplacementNamed(RoutePaths.navScreen);
     }, (user) {
       _currentUserProvier.addUser(user);
       updateLoading(false);
-      context.pushNamed(RoutePaths.navScreen);
+      context.pushReplacementNamed(RoutePaths.navScreen);
     });
   }
 

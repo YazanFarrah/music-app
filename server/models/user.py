@@ -1,7 +1,7 @@
 from models.base import Base
 from pydantic_schema.user_create import Gender
 from sqlalchemy import TEXT, VARCHAR, Column,  Enum as SQLAEnum, Date, LargeBinary
-
+from sqlalchemy.orm import relationship
 
 class User(Base):
     __tablename__ = 'users'
@@ -11,6 +11,9 @@ class User(Base):
     password = Column(LargeBinary)
     birthday = Column(Date)
     gender = Column(SQLAEnum(Gender))
+    
+    favorites = relationship("Favorite", back_populates="user")
+    
 
     def to_dict(self):
         return {

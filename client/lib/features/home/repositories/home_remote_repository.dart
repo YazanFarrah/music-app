@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:client/config/api_paths.dart';
 import 'package:client/core/error/error_handler.dart';
 
@@ -63,6 +65,53 @@ class HomeRemoteRepository {
         res,
         (json) => SongModel.fromJson(json),
       );
+    } catch (e) {
+      return left(AppFailure(e.toString()));
+    }
+  }
+
+  Future<Either<AppFailure, bool>> favoriteSong(String songId) async {
+    try {
+      final res = await RestApiService.post(
+        ApiPaths.favoriteSong,
+        {
+          "song_id": songId,
+        },
+      );
+
+      if (res.statusCode != 200) {
+        return left(AppFailure(res.body));
+      }
+
+      final data = jsonDecode(res.body)['msg'];
+      if (data is bool) {
+        return right(data);
+      } else {
+        return left(ParsingFailure('Expected boolean but got something else'));
+      }
+    } catch (e) {
+      return left(AppFailure(e.toString()));
+    }
+  }
+
+  Future<Either<AppFailure, List<SongModel>>> getAllfavoriteSongs() async {
+    try {
+      final res = await RestApiService.get(ApiPaths.getAllFavoriteSongs);
+
+      var resBodyjson = jsonDecode(res.body);
+
+      if (res.statusCode != 200) {
+        resBodyjson = resBodyjson as Map<String, dynamic>;
+        return Left(AppFailure(resBodyjson['detail']));
+      }
+      resBodyjson = resBodyjson as List;
+
+      List<SongModel> songs = [];
+
+      for (final json in resBodyjson) {
+        songs.add(SongModel.fromJson(json['song']));
+      }
+      return right(songs);
     } catch (e) {
       return left(AppFailure(e.toString()));
     }

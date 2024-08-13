@@ -12,5 +12,7 @@ class ApiPaths {
   // Song:
   static const String uploadSong = 'song/upload';
   static const String getAllSongs = 'song/list';
+  static const String favoriteSong = 'song/favorite';
+  static const String getAllFavoriteSongs = 'song/favorites-list';
 
 }

@@ -49,9 +49,10 @@ class AppDarkColors {
 }
 
 class SharedColors {
-  static const Color primaryColor =Color.fromARGB(255, 21, 63, 69);
+  static const Color primaryColor = Color.fromARGB(255, 21, 63, 69);
   static const Color successColor = Colors.green;
   static Color greyTextColor = Colors.grey.shade700;
   static Color yellowColor = const Color(0XFFFACC59);
+  static const Color grayColor = Color(0xFFDCDCDC);
   static Color redColor = const Color(0XFFC94127);
 }

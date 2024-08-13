@@ -3,7 +3,9 @@ import 'package:client/core/providers/bottom_nav_bar_provider.dart';
 import 'package:client/core/theme/app_colors.dart';
 import 'package:client/core/widgets/music_slap.dart';
 import 'package:client/features/home/view/pages/home_page.dart';
+import 'package:client/features/home/view/pages/library_page.dart';
 import 'package:client/features/home/view/pages/upload_song_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,8 +14,8 @@ class BottomNavBar extends StatelessWidget {
 
   final List<Widget> _screens = const [
     HomePage(),
+    LibraryPage(),
     UploadSongPage(),
-    Text("3rd"),
   ];
 
   @override
@@ -23,18 +25,16 @@ class BottomNavBar extends StatelessWidget {
       child: Consumer<BottomNavProvider>(
         builder: (context, provider, child) {
           return Scaffold(
-            body: SafeArea(
-              child: Stack(
-                children: [
-                  _screens[provider.currentIndex],
-                   const Positioned(
-                    bottom: 0,
-                    right: 8,
-                    left: 8,
-                    child: MusicSlap(),
-                  ),
-                ],
-              ),
+            body: Stack(
+              children: [
+                _screens[provider.currentIndex],
+                const Positioned(
+                  bottom: 0,
+                  right: 8,
+                  left: 8,
+                  child: MusicSlap(),
+                ),
+              ],
             ),
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: provider.currentIndex,
@@ -63,15 +63,15 @@ class BottomNavBar extends StatelessWidget {
                   label: 'Library',
                 ),
                 BottomNavigationBarItem(
-                  icon: Image.asset(
+                  icon: Icon(
                     provider.currentIndex == 2
-                        ? AssetPaths.searchIconFilled
-                        : AssetPaths.searchIconUnFilled,
+                        ? CupertinoIcons.add_circled_solid
+                        : CupertinoIcons.add_circled,
                     color: provider.currentIndex == 2
                         ? Colors.white
                         : SharedColors.greyTextColor,
                   ),
-                  label: 'Search',
+                  label: 'Upload',
                 ),
               ],
             ),

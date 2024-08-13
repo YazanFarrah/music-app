@@ -1,6 +1,7 @@
 import 'package:just_audio/just_audio.dart';
 import 'package:client/core/models/song_model.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 
 class CurrentSongProvider extends ChangeNotifier {
   AudioPlayer? _audioPlayer;
@@ -16,7 +17,8 @@ class CurrentSongProvider extends ChangeNotifier {
       return;
     } else {
       _currentSong = null;
-      _audioPlayer?.dispose();
+      await _audioPlayer?.stop();
+      await _audioPlayer?.dispose();
       notifyListeners();
     }
 
@@ -25,6 +27,13 @@ class CurrentSongProvider extends ChangeNotifier {
 
       final audioSource = AudioSource.uri(
         Uri.parse(song.songUrl!),
+        tag: MediaItem(
+            id: song.id!,
+            title: song.songName!,
+            artist: song.artistName,
+            artUri: Uri.parse(
+              song.thumbnailUrl!,
+            )),
       );
       _currentSong = song;
       _isPlaying = true;
@@ -61,6 +70,14 @@ class CurrentSongProvider extends ChangeNotifier {
           milliseconds: (val * _audioPlayer!.duration!.inMilliseconds).toInt(),
         ),
       );
+    }
+  }
+
+  bool isSongPlaying(SongModel song) {
+    if (_currentSong != null) {
+      return _currentSong?.id == song.id;
+    } else {
+      return false;
     }
   }
 }

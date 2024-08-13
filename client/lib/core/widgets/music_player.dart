@@ -1,12 +1,15 @@
+import 'dart:math';
+
 import 'package:client/config/asset_paths.dart';
 import 'package:client/config/style_constants.dart';
 import 'package:client/core/models/song_model.dart';
 import 'package:client/core/providers/current_song_provider.dart';
 import 'package:client/core/utils/color_utils.dart';
 import 'package:client/core/widgets/custom_cached_image.dart';
+import 'package:client/core/widgets/song_info_modal_sheet.dart';
+import 'package:client/features/home/viewmodel/home_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:like_button/like_button.dart';
@@ -21,6 +24,7 @@ class MusicPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeProvider = context.watch<HomeViewModel>();
     return Container(
       padding: StyleConstants.horizontalPadding.copyWith(top: 15),
       decoration: BoxDecoration(
@@ -42,16 +46,44 @@ class MusicPlayer extends StatelessWidget {
           elevation: 0,
           leading: Transform.translate(
             offset: const Offset(-15, 0),
-            child: GestureDetector(
-              onTap: () => context.pop(),
-              child: Padding(
-                padding: EdgeInsets.all(10.r),
-                child: Image.asset(
-                  AssetPaths.pullDownArrow,
+            child: IconButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onPressed: () {
+                context.pop();
+              },
+              icon: Transform.rotate(
+                angle: pi / 2,
+                child: const Icon(
+                  Icons.arrow_forward_ios,
                 ),
               ),
             ),
           ),
+          actions: [
+            IconButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onPressed: () {
+                showModalBottomSheet(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(20.0)),
+                  ),
+                  backgroundColor: Theme.of(context).primaryColor,
+                  context: context,
+                  builder: (context) {
+                    return CustomModalSheet(
+                      song: song,
+                    );
+                  },
+                );
+              },
+              icon: const Icon(
+                CupertinoIcons.ellipsis,
+              ),
+            ),
+          ],
         ),
         body: Column(
           children: [
@@ -59,14 +91,11 @@ class MusicPlayer extends StatelessWidget {
               flex: 5,
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 30.w),
-                child: Hero(
-                  tag: "music-image",
-                  child: CustomImage(
-                    fit: BoxFit.cover,
-                    image: song.thumbnailUrl!,
-                    asDecoration: true,
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
+                child: CustomImage(
+                  fit: BoxFit.cover,
+                  image: song.thumbnailUrl!,
+                  asDecoration: true,
+                  borderRadius: BorderRadius.circular(10.r),
                 ),
               ),
             ),
@@ -91,23 +120,28 @@ class MusicPlayer extends StatelessWidget {
                         ],
                       ),
                       const Spacer(),
-                      IconButton(
-                        onPressed: () {},
-                        icon: LikeButton(
-                          likeBuilder: (bool isLiked) {
-                            return Icon(
-                              isLiked
-                                  ? CupertinoIcons.heart_fill
-                                  : CupertinoIcons.heart,
-                            );
-                          },
-                        ),
-                      )
+                      LikeButton(
+                        isLiked: homeProvider.isSongFav(song),
+                        onTap: (isLiked) {
+                          return homeProvider.favUnfavSong(
+                            context: context,
+                            song: song,
+                          );
+                        },
+                        likeBuilder: (bool isLiked) {
+                          return Icon(
+                            isLiked
+                                ? CupertinoIcons.heart_fill
+                                : CupertinoIcons.heart,
+                          );
+                        },
+                      ),
                     ],
                   ),
                   SizedBox(height: 15.h),
                   Consumer<CurrentSongProvider>(
                       builder: (context, currentSongProvider, child) {
+                    currentSongProvider.currentSong?.id == song.id;
                     return StreamBuilder(
                         stream: currentSongProvider.audioPlayer!.positionStream,
                         builder: (context, snapshot) {

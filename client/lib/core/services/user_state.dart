@@ -31,11 +31,12 @@ class _UserStateState extends State<UserState> {
   void checkUserState() async {
     if (locator.getToken == null) {
       Future.delayed(Duration.zero, () {
-        context.pushNamed(RoutePaths.auth);
+        context.pushReplacement(RoutePaths.auth);
       });
     } else {
       await Future.wait([
         context.read<HomeViewModel>().fetchAllSongs(context),
+        context.read<HomeViewModel>().getAllFavSongs(context: context),
         context.read<AuthViewModel>().getCurrentUserData(context: context),
       ]);
 

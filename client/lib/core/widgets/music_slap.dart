@@ -1,6 +1,7 @@
 import 'package:client/core/providers/current_song_provider.dart';
 import 'package:client/core/utils/color_utils.dart';
 import 'package:client/core/widgets/music_player.dart';
+import 'package:client/features/home/viewmodel/home_view_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class MusicSlap extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentSong = Provider.of<CurrentSongProvider>(context).currentSong;
     final currentSongProvider = context.read<CurrentSongProvider>();
+    final homeProvider = context.watch<HomeViewModel>();
 
     if (currentSong == null) {
       return const SizedBox.shrink();
@@ -34,8 +36,9 @@ class MusicSlap extends StatelessWidget {
         },
         child: Stack(
           children: [
-            Container(
-              height: 66.h,
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              height: 62.h,
               decoration: BoxDecoration(
                 color: hexToColor(
                   currentSong.hexCode ?? generateRandomHexColor(),
@@ -50,19 +53,16 @@ class MusicSlap extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Hero(
-                        tag: "music-image",
-                        child: Container(
-                          width: 48.w,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                currentSong.thumbnailUrl!,
-                              ),
-                              fit: BoxFit.cover,
+                      Container(
+                        width: 48.w,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              currentSong.thumbnailUrl!,
                             ),
-                            borderRadius: BorderRadius.circular(5.r),
+                            fit: BoxFit.cover,
                           ),
+                          borderRadius: BorderRadius.circular(5.r),
                         ),
                       ),
                       SizedBox(width: 8.w),
@@ -100,20 +100,24 @@ class MusicSlap extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: LikeButton(
-                          likeBuilder: (bool isLiked) {
-                            return Icon(
-                              isLiked
-                                  ? CupertinoIcons.heart_fill
-                                  : CupertinoIcons.heart,
-                              color: getColorBasedOnBackground(
-                                currentSong.hexCode ?? generateRandomHexColor(),
-                              ),
-                            );
-                          },
-                        ),
+                      LikeButton(
+                        isLiked: homeProvider.isSongFav(currentSong),
+                        onTap: (isLiked) {
+                          return homeProvider.favUnfavSong(
+                            context: context,
+                            song: currentSong,
+                          );
+                        },
+                        likeBuilder: (bool isLiked) {
+                          return Icon(
+                            isLiked
+                                ? CupertinoIcons.heart_fill
+                                : CupertinoIcons.heart,
+                            color: getColorBasedOnBackground(
+                              currentSong.hexCode ?? generateRandomHexColor(),
+                            ),
+                          );
+                        },
                       ),
                       IconButton(
                         onPressed: () {
@@ -129,7 +133,7 @@ class MusicSlap extends StatelessWidget {
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

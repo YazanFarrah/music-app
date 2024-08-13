@@ -7,7 +7,7 @@ import 'package:client/core/error/error_handler.dart';
 import 'package:client/core/error/failure.dart';
 import 'package:client/core/services/api_service.dart';
 import 'package:client/core/utils/prints_utils.dart';
-import 'package:client/features/auth/model/user_model.dart';
+import 'package:client/core/models/user_model.dart';
 import 'package:fpdart/fpdart.dart';
 
 class AuthRemoteRepository {

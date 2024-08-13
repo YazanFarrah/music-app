@@ -20,5 +20,7 @@
   "songName": "Song Name",
   "pickFile": "Pick File",
   "artist": "Artist",
-  "chooseThumbnail": "Choose Thumbnail"
+  "chooseThumbnail": "Choose Thumbnail",
+  "pickSong": "Pick Song",
+  "uploadSong": "Upload Song"
 }
