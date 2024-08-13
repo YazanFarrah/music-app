@@ -4,6 +4,7 @@ import 'package:client/core/widgets/music_player.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
@@ -49,16 +50,19 @@ class MusicSlap extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Container(
-                        width: 48.w,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              currentSong.thumbnailUrl!,
+                      Hero(
+                        tag: "music-image",
+                        child: Container(
+                          width: 48.w,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                currentSong.thumbnailUrl!,
+                              ),
+                              fit: BoxFit.cover,
                             ),
-                            fit: BoxFit.cover,
+                            borderRadius: BorderRadius.circular(5.r),
                           ),
-                          borderRadius: BorderRadius.circular(5.r),
                         ),
                       ),
                       SizedBox(width: 8.w),
@@ -170,7 +174,7 @@ class MusicSlap extends StatelessWidget {
                 }),
           ],
         ),
-      );
+      ).animate().flipV();
     }
   }
 }

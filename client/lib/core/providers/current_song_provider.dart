@@ -53,4 +53,14 @@ class CurrentSongProvider extends ChangeNotifier {
     _isPlaying = !_isPlaying;
     notifyListeners();
   }
+
+  void seek(double val) {
+    if (_audioPlayer != null) {
+      _audioPlayer!.seek(
+        Duration(
+          milliseconds: (val * _audioPlayer!.duration!.inMilliseconds).toInt(),
+        ),
+      );
+    }
+  }
 }

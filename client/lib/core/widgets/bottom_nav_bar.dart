@@ -27,7 +27,7 @@ class BottomNavBar extends StatelessWidget {
               child: Stack(
                 children: [
                   _screens[provider.currentIndex],
-                  const Positioned(
+                   const Positioned(
                     bottom: 0,
                     right: 8,
                     left: 8,
